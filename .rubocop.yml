@@ -1,0 +1,9 @@
+Metrics/BlockLength:
+  Max: 100
+
+Layout/LineLength:
+  Max: 150
+
+Metrics/AbcSize:
+  Exclude:
+    - 'lib/user.rb'
