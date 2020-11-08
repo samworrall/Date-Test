@@ -13,34 +13,42 @@ class User
 
   # Returns an Integer representing the current age
   def age
-    now = Date.today
-    current_day = now.day
-    current_month = now.month
-    current_year = now.year
-
     age = current_year - date_of_birth.year
 
-    return age if current_month > date_of_birth.month
+    return age if beyond_birth_month?
 
-    return age if current_month == date_of_birth.month && current_day >= date_of_birth.day
+    return age if beyond_birth_day_within_birth_month?
 
     age - 1
   end
 
   # Returns a Date object for current upcoming birthday
   def next_birthday
-    now = Date.today
-    current_day = now.day
-    current_month = now.month
-    current_year = now.year
-
     year = current_year + 1
 
-    return Date.new(year, date_of_birth.month, date_of_birth.day) if current_month > date_of_birth.month
+    return Date.new(year, date_of_birth.month, date_of_birth.day) if beyond_birth_month?
 
-    return Date.new(year, date_of_birth.month, date_of_birth.day) if current_month == date_of_birth.month && current_day >= date_of_birth.day
+    return Date.new(year, date_of_birth.month, date_of_birth.day) if beyond_birth_day_within_birth_month?
 
     Date.new(year - 1, date_of_birth.month, date_of_birth.day)
+  end
+
+  private
+
+  def now
+    @now ||= Date.today
+  end
+
+  def current_year
+    now.year
+  end
+
+  def beyond_birth_month?
+    now.month > date_of_birth.month
+  end
+
+  def beyond_birth_day_within_birth_month?
+    now.month == date_of_birth.month && now.day >= date_of_birth.day
   end
 end
 
