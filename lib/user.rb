@@ -28,7 +28,20 @@ class User
   end
 
   # Returns a Date object for current upcoming birthday
-  def next_birthday; end
+  def next_birthday
+    now = Date.today
+    current_day = now.day
+    current_month = now.month
+    current_year = now.year
+
+    year = current_year + 1
+
+    return Date.new(year, date_of_birth.month, date_of_birth.day) if current_month > date_of_birth.month
+
+    return Date.new(year, date_of_birth.month, date_of_birth.day) if current_month == date_of_birth.month && current_day >= date_of_birth.day
+
+    Date.new(year - 1, date_of_birth.month, date_of_birth.day)
+  end
 end
 
 tests = [
